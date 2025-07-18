@@ -307,3 +307,8 @@ main {
     transform: rotate(360deg);
   }
 }
+
+/* No major changes needed, but add a little spacing for the popup image */
+.contact-content img {
+  margin-bottom: 1rem;
+}

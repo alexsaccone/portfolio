@@ -31,33 +31,65 @@ function Home() {
   );
 }
 
-function Projects() {
+function ProjectPopup({ open, onClose, project }) {
+  return (
+    <>
+      <div className={`contact-popup${open ? " open" : ""}`}> 
+        <div className="contact-content">
+          <button className="close-btn" onClick={onClose}>×</button>
+          {project && (
+            <>
+              <h2>{project.name}</h2>
+              <img src={project.img2} alt={project.name + ' 2'} style={{width: '100%', borderRadius: '10px', margin: '1rem 0'}} />
+              <p style={{color: '#bdbdbd'}}>{project.longDesc}</p>
+            </>
+          )}
+        </div>
+      </div>
+      <div
+        className="contact-popup-overlay"
+        style={{ display: open ? 'block' : 'none' }}
+        onClick={onClose}
+      />
+    </>
+  );
+}
+
+function Projects({ openPopup, closePopup, popupOpen, selectedProject }) {
   const projects = [
     {
       name: "Project Alpha",
-      desc: "A cool project that does amazing things.",
-      img: "https://via.placeholder.com/300x180?text=Project+Alpha"
+      img: "https://via.placeholder.com/300x180?text=Project+Alpha",
+      img2: "https://via.placeholder.com/400x220?text=Alpha+Screenshot+2",
+      shortDesc: "A cool project that does amazing things.",
+      longDesc: "Project Alpha is a demonstration of advanced algorithms and modern UI. It features a robust backend and a beautiful frontend, making it a great showcase for my skills."
     },
     {
       name: "Beta Builder",
-      desc: "A builder tool for beta testing.",
-      img: "https://via.placeholder.com/300x180?text=Beta+Builder"
+      img: "https://via.placeholder.com/300x180?text=Beta+Builder",
+      img2: "https://via.placeholder.com/400x220?text=Beta+Builder+Extra",
+      shortDesc: "A builder tool for beta testing.",
+      longDesc: "Beta Builder streamlines the process of beta testing for developers. It includes automated feedback collection and analytics, all in a user-friendly package."
     },
     {
       name: "Gamma Game",
-      desc: "A fun game built with React.",
-      img: "https://via.placeholder.com/300x180?text=Gamma+Game"
+      img: "https://via.placeholder.com/300x180?text=Gamma+Game",
+      img2: "https://via.placeholder.com/400x220?text=Gamma+Game+Level+2",
+      shortDesc: "A fun game built with React.",
+      longDesc: "Gamma Game is a fast-paced, addictive game built with React. It features multiple levels, smooth animations, and a high score system."
     }
   ];
+
   return (
     <div className="projects-container">
       {projects.map((proj, idx) => (
-        <div className="project-card" key={idx}>
+        <div className="project-card" key={idx} onClick={() => openPopup(proj)}>
           <img src={proj.img} alt={proj.name} className="project-img" />
           <h3 className="project-title">{proj.name}</h3>
-          <p className="project-desc">{proj.desc}</p>
+          <p className="project-desc">{proj.shortDesc}</p>
         </div>
       ))}
+      <ProjectPopup open={popupOpen} onClose={closePopup} project={selectedProject} />
     </div>
   );
 }
@@ -69,7 +101,7 @@ function ContactPopup({ open, onClose }) {
         <div className="contact-content">
           <button className="close-btn" onClick={onClose}>×</button>
           <h2>Contact</h2>
-          <p>Email: your.email@example.com</p>
+          <p>Email: saccone.alexander.c@gmail.com</p>
         </div>
       </div>
       <div
@@ -82,7 +114,34 @@ function ContactPopup({ open, onClose }) {
 }
 
 function App() {
-  const [contactOpen, setContactOpen] = useState(false);
+  const [contactOpen, setContactOpen] = React.useState(false);
+  const [popupOpen, setPopupOpen] = React.useState(false);
+  const [selectedProject, setSelectedProject] = React.useState(null);
+
+  // Escape key closes popups
+  React.useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        if (contactOpen) setContactOpen(false);
+        if (popupOpen) {
+          setPopupOpen(false);
+          setSelectedProject(null);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [contactOpen, popupOpen]);
+
+  const openPopup = (project) => {
+    setSelectedProject(project);
+    setPopupOpen(true);
+  };
+  const closePopup = () => {
+    setPopupOpen(false);
+    setSelectedProject(null);
+  };
+
   return (
     <Router>
       <div className="app-root">
@@ -97,7 +156,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects" element={<Projects openPopup={openPopup} closePopup={closePopup} popupOpen={popupOpen} selectedProject={selectedProject} />} />
           </Routes>
         </main>
         <ContactPopup open={contactOpen} onClose={() => setContactOpen(false)} />
