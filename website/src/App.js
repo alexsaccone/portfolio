@@ -21,6 +21,11 @@ function Home() {
           placeholder bio
         </div>
       </div>
+      <div className="bio-background">
+        <div className="home-bio-section">
+          placeholder bio
+        </div>
+      </div>
     </div>
   );
 }
@@ -111,6 +116,7 @@ function App() {
   const [contactOpen, setContactOpen] = React.useState(false);
   const [popupOpen, setPopupOpen] = React.useState(false);
   const [selectedProject, setSelectedProject] = React.useState(null);
+  const [navbarTransparent, setNavbarTransparent] = React.useState(true);
 
   // Escape key closes popups
   React.useEffect(() => {
@@ -127,6 +133,24 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [contactOpen, popupOpen]);
 
+  // Handle navbar transparency based on scroll position
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      
+      // Only make navbar opaque when scrolled past the first viewport (where the image ends)
+      if (scrollY > viewportHeight) {
+        setNavbarTransparent(false);
+      } else {
+        setNavbarTransparent(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const openPopup = (project) => {
     setSelectedProject(project);
     setPopupOpen(true);
@@ -139,7 +163,7 @@ function App() {
   return (
     <Router>
       <div className="app-root">
-        <nav className="navbar">
+        <nav className={`navbar ${navbarTransparent ? 'transparent' : ''}`}>
           <div className="nav-left">
             <Link to="/" className="nav-logo">My Portfolio</Link>
             <Link to="/" className="nav-link">Home</Link>

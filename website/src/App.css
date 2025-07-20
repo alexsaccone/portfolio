@@ -44,20 +44,31 @@ body, .app-root {
   left: 0;
   right: 0;
   z-index: 100;
+  transition: background-color 0.3s ease;
+}
+
+.navbar.transparent {
+  background: rgba(24, 24, 24, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.nav-logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent);
+  text-decoration: none;
+  margin: 0;
+  z-index: 101;
 }
 
 .nav-left {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-}
-
-.nav-logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--accent);
-  text-decoration: none;
-  margin-right: 2rem;
 }
 
 .nav-link {
