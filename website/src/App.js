@@ -3,29 +3,23 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 
 function Home() {
-  // Simple parallax effect for background
-  React.useEffect(() => {
-    const handleScroll = () => {
-      const bg = document.querySelector('.home-bg');
-      if (bg) {
-        bg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <div className="home-container">
-      <div className="home-bg"></div>
-      <div className="home-content">
-        <img className="profile-pic" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" />
-        <h1 className="home-name">John Doe</h1>
-        <div className="home-links">
-          <a href="https://www.linkedin.com/in/alexander-saccone/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="https://github.com/alexsaccone" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <div className="hero-section">
+        <img className="home-bg" src="/my_mountains.jpg" alt="Background" />
+        <div className="home-content">
+          <img className="profile-pic" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" />
+          <h1 className="home-name">Alexander Saccone</h1>
+          <div className="home-links">
+            <a href="https://www.linkedin.com/in/alexander-saccone/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://github.com/alexsaccone" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
         </div>
-        <p className="home-bio">I'm a computer science student passionate about building impactful software and learning new technologies. Welcome to my portfolio!</p>
+      </div>
+      <div className="bio-background">
+        <div className="home-bio-section">
+          placeholder bio
+        </div>
       </div>
     </div>
   );
