@@ -8,8 +8,13 @@ function Home() {
       <div className="hero-section">
         <img className="home-bg" src="/my_mountains.jpg" alt="Background" />
         <div className="home-content">
-          <img className="profile-pic" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" />
-          <h1 className="home-name">Alexander Saccone</h1>
+          <div className="home-main-row">
+            <div className="home-name-col">
+              <span className="home-first-name">Alexander</span>
+              <span className="home-last-name">Saccone</span>
+            </div>
+            <img className="profile-pic" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" />
+          </div>
           <div className="home-links">
             <a href="https://www.linkedin.com/in/alexander-saccone/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="https://github.com/alexsaccone" target="_blank" rel="noopener noreferrer">GitHub</a>
